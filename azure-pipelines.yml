@@ -1,0 +1,29 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - script: |
+      echo Installing Flutter...
+      sudo snap install flutter --classic
+      flutter doctor
+    displayName: 'Install Flutter'
+
+  - script: |
+      echo Installing dependencies and running Flutter tests...
+      flutter pub get
+      flutter test
+    displayName: 'Build and test Flutter app'
+
+  - script: |
+      echo Setting up Java environment...
+      sudo apt-get install openjdk-11-jdk
+    displayName: 'Install JDK'
+
+  - script: |
+      echo Building and testing Spring Boot application...
+      cd Backend
+      mvn clean install
+    displayName: 'Build and test Spring Boot app'
